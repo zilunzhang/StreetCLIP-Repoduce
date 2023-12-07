@@ -56,6 +56,8 @@ python eval_img2gps.py --model-name ViT-B-32 --ckpt-path path/to/StreetCLIP/ckpt
 |StreetCLIP@ViT-L-14-336|[Paper](https://arxiv.org/pdf/2302.00275.pdf)|-|22.4 |37.4|61.3 |80.4|
 |StreetCLIP@ViT-L-14-336|[StreetCLIP-reproduce](https://huggingface.co/geolocal/StreetCLIP/tree/main)|4.24|21.79|34.73|55.52|74.84|
 |CLIP@ViT-B-32|[OpenAI's CLIP](https://github.com/openai/CLIP)|1.67|8.88|14.65|32.87|53.72|
+|CLIP@ViT-B-16|[OpenAI's CLIP](https://github.com/openai/CLIP)|2.47|12.41|20.39|39.71|61.86|
+|CLIP@ViT-L-14|[OpenAI's CLIP](https://github.com/openai/CLIP)|3.34|17.68|28.86|51.55|68.90|
 |CLIP@ViT-H-14|[OpenCLIP](https://github.com/mlfoundations/open_clip)|3.94|18.69|30.60|51.95|71.10|
 
 ### Result on IM2GPS
@@ -68,6 +70,8 @@ python eval_img2gps.py --model-name ViT-B-32 --ckpt-path path/to/StreetCLIP/ckpt
 |StreetCLIP@ViT-L-14-336|[Paper](https://arxiv.org/pdf/2302.00275.pdf)|-|28.3 | 45.1|74.7 |88.2|
 |StreetCLIP@ViT-L-14-336|[StreetCLIP-reproduce](https://huggingface.co/geolocal/StreetCLIP/tree/main)|5.49|28.27|42.62|67.51|80.17|
 |CLIP@ViT-B-32|[OpenAI's CLIP](https://github.com/openai/CLIP)|2.11|16.46|26.58|46.41|66.24|
+|CLIP@ViT-B-16|[OpenAI's CLIP](https://github.com/openai/CLIP)|2.53|19.83|31.65|52.74|71.31|
+|CLIP@ViT-L-14|[OpenAI's CLIP](https://github.com/openai/CLIP)|4.22|24.05|35.44|58.65|77.63|
 |CLIP@ViT-H-14|[OpenCLIP](https://github.com/mlfoundations/open_clip)|5.49|29.54|44.30|65.82|79.75|
 
 
