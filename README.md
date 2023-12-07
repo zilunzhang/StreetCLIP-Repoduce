@@ -22,9 +22,9 @@ I am trying to reproduce the [StreetCLIP](https://arxiv.org/pdf/2302.00275.pdf).
 
 ### Data 
 
-* [IM2GPS](http://graphics.cs.cmu.edu/projects/im2gps/): [Download](http://graphics.cs.cmu.edu/projects/im2gps/gps_query_imgs.zip)
+* [IM2GPS](http://graphics.cs.cmu.edu/projects/im2gps/): [Download](http://graphics.cs.cmu.edu/projects/im2gps/gps_query_imgs.zip) Put it into ./data/img2gps_dataset/image
 
-* [IM2GPS3K](https://github.com/lugiavn/revisiting-im2gps/): [Download](http://www.mediafire.com/file/7ht7sn78q27o9we/im2gps3ktest.zip)
+* [IM2GPS3K](https://github.com/lugiavn/revisiting-im2gps/): [Download](http://www.mediafire.com/file/7ht7sn78q27o9we/im2gps3ktest.zip) Put it into ./data/img2gps3k_dataset/image
 
 * [Original Matlab implementation for inference](https://github.com/lugiavn/revisiting-im2gps/blob/master/main_im2gps_test.m)
 
