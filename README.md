@@ -22,13 +22,29 @@ I am trying to reproduce the [StreetCLIP](https://arxiv.org/pdf/2302.00275.pdf).
 
 ### Data 
 
-* [IM2GPS](http://graphics.cs.cmu.edu/projects/im2gps/): [Download](http://graphics.cs.cmu.edu/projects/im2gps/gps_query_imgs.zip) Put it into ./data/img2gps_dataset/image
-
-* [IM2GPS3K](https://github.com/lugiavn/revisiting-im2gps/): [Download](http://www.mediafire.com/file/7ht7sn78q27o9we/im2gps3ktest.zip) Put it into ./data/img2gps3k_dataset/image
-
+* [IM2GPS](http://graphics.cs.cmu.edu/projects/im2gps/): [Download](http://graphics.cs.cmu.edu/projects/im2gps/gps_query_imgs.zip)
+  ```
+  unzip gps_query_imgs.zip
+  mv gps_query_imgs ./data/img2gps_dataset/image
+  ``` 
+* [IM2GPS3K](https://github.com/lugiavn/revisiting-im2gps/): [Download](http://www.mediafire.com/file/7ht7sn78q27o9we/im2gps3ktest.zip)
+  ```
+  unzip im2gps3ktest.zip
+  mv im2gps3ktest ./data/img2gps_dataset/image
+  ``` 
 * [Original Matlab implementation for inference](https://github.com/lugiavn/revisiting-im2gps/blob/master/main_im2gps_test.m)
 
 * [Alternative implementation](https://github.com/TIBHannover/GeoEstimation/blob/master/classification/utils_global.py)
+
+### Checkpoint
+```
+git clone https://huggingface.co/geolocal/StreetCLIP
+```
+
+### Run
+```
+python eval_img2gps.py --model-name ViT-B-32 --ckpt-path path/to/StreetCLIP/ckpt
+```
 
 ### Result on IM2GPS3K
 * n=2997
