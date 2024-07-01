@@ -33,8 +33,8 @@ country_candidates_list_from_streetclip = [
     "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland",
     "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga",
     "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
-    "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam",
-    "Yemen", "Zambia", "Zimbabwe"
+    "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe",
+    # "United States"
 ]
 
 # mismatch between names in country list from the paper and names in SimpleMaps-Basic database
@@ -50,6 +50,17 @@ streetclip2simplemap = {
     "Republic of the Congo": "Congo (Brazzaville)"
 }
 
+US_states = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
+    "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+    "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+    "West Virginia", "Wisconsin", "Wyoming"
+]
+
+country_candidates_list_from_streetclip += US_states
+
 
 def eval_geolocation_openclip(img_dir, model_name, model_path, country_list, simple_map_df, num_worker, batch_size, topk_city_per_country=30):
 
@@ -64,6 +75,8 @@ def eval_geolocation_openclip(img_dir, model_name, model_path, country_list, sim
             cities_1 = simple_map_df[simple_map_df["country"] == "Gaza Strip"]
             cities_2 = simple_map_df[simple_map_df["country"] == "West Bank"]
             cities_df = pd.concat([cities_1, cities_2])
+        if country in US_states:
+            cities_df = simple_map_df[simple_map_df["country"] == "United States"]
         cities_df_sorted = cities_df.sort_values("population", ascending=False)
         city_names = cities_df_sorted["city_ascii"].tolist()[:topk_city_per_country]
         return city_names
@@ -87,7 +100,8 @@ def eval_geolocation_openclip(img_dir, model_name, model_path, country_list, sim
     )
 
     # Stage 1: Linear prob a country
-    country_text_prompt = ["A Street View photo in {}.".format(country) for country in country_list]
+    # A Street View photo in {state}, United States.
+    country_text_prompt = ["A Street View photo in {}.".format(country) if country not in US_states else "A Street View photo in {}, United States.".format(country) for country in country_list]
     img2country_sim_list = []
     img_name_list = []
     image_normed_features_list = []
@@ -113,6 +127,7 @@ def eval_geolocation_openclip(img_dir, model_name, model_path, country_list, sim
     # Stage 2: Linear prob a city
     result_dict = dict()
     selected_city = [country2city(country) for country in selected_country]
+
     for i, city_list in tqdm(enumerate(selected_city)):
         city_text_prompt = ["A Street View photo from {}.".format(city) for city in city_list]
         text = tokenizer(city_text_prompt)
@@ -146,6 +161,8 @@ def eval_geolocation_streetclip(img_dir, model_name, model_path, country_list, s
             cities_1 = simple_map_df[simple_map_df["country"] == "Gaza Strip"]
             cities_2 = simple_map_df[simple_map_df["country"] == "West Bank"]
             cities_df = pd.concat([cities_1, cities_2])
+        if country in US_states:
+            cities_df = simple_map_df[simple_map_df["country"] == "United States"]
         cities_df_sorted = cities_df.sort_values("population", ascending=False)
         city_names = cities_df_sorted["city_ascii"].tolist()[:topk_city_per_country]
         return city_names
@@ -218,29 +235,29 @@ def main():
     )
     parser.add_argument(
         "--test-dataset-dir",
-        # default="./data/img2gps3k_dataset/image",
-        default="./data/img2gps_dataset/image",
+        default="./data/img2gps3k_dataset/image",
+        # default="./data/img2gps_dataset/image",
         type=str,
         help="test dataset dir",
     )
     parser.add_argument(
         "--gps-mat-path",
-        # default="./data/img2gps3k_dataset/img2gps3k_gps.mat",
-        default="./data/img2gps_dataset/img2gps_gps.mat",
+        default="./data/img2gps3k_dataset/img2gps3k_gps.mat",
+        # default="./data/img2gps_dataset/img2gps_gps.mat",
         type=str,
         help="gps path",
     )
     parser.add_argument(
         "--imgname-mat-path",
-        # default="./data/img2gps3k_dataset/img2gps3k_image_names.mat",
-        default="./data/img2gps_dataset/img2gps_image_names.mat",
+        default="./data/img2gps3k_dataset/img2gps3k_image_names.mat",
+        # default="./data/img2gps_dataset/img2gps_image_names.mat",
         type=str,
         help="imgname path",
     )
     parser.add_argument(
         "--imgname-coord-path",
-        # default="./data/img2gps3k_dataset/img2gps3k_dataset_2997.csv",
-        default="./data/img2gps_dataset/img2gps_dataset_237.csv",
+        default="./data/img2gps3k_dataset/img2gps3k_dataset_2997.csv",
+        # default="./data/img2gps_dataset/img2gps_dataset_237.csv",
         type=str,
         help="path of img2gps_dataset_237.csv/img2gps3k_dataset_2997.csv",
     )
@@ -249,7 +266,7 @@ def main():
         help="number of workers",
     )
     parser.add_argument(
-        "--batch-size", default=300, type=int,
+        "--batch-size", default=200, type=int,
         help="batch size",
     )
 
